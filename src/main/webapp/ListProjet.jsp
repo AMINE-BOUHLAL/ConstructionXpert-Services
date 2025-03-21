@@ -44,8 +44,6 @@
             color: var(--primary) !important;
         }
 
-
-
         .dashboard {
             padding: 50px 0;
         }
@@ -213,6 +211,13 @@
                 </a>
             </div>
 
+            <!-- Affichage du message d'erreur s'il existe -->
+            <% if(request.getAttribute("errorMessage") != null) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= request.getAttribute("errorMessage") %>
+            </div>
+            <% } %>
+
             <table class="projects-table">
                 <thead>
                 <tr>
@@ -240,21 +245,20 @@
                     <td><%= projet.getBudget() %></td>
                     <td class="actions" style="width: 150px;">
                         <div class="project-actions">
-                            <a href="<%=request.getContextPath()%>/projet?action=neweditform" class="action-btn edit-btn">Modifier</a>
+                            <a href="<%=request.getContextPath()%>/projet?action=neweditform&idProjet=<%=projet.getIdProjet()%>" class="action-btn edit-btn">Modifier</a>
                             <a href="<%=request.getContextPath()%>/projet?action=deleteprojet&id=<%=projet.getIdProjet()%>" class="action-btn delete-btn">Supprimer</a>
                             <button class="action-btn details-btn">Details</button>
                         </div>
                     </td>
                 </tr>
                 <% }
-                    } %>
+                } %>
                 </tbody>
             </table>
         </section>
     </div>
 </main>
 
-<!-- Bootstrap JS (for navbar functionality) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // JavaScript for "Details" button functionality

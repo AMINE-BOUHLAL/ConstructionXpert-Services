@@ -12,7 +12,14 @@ public class Projet {
 
     public Projet() {
     }
-
+    public Projet(int idProjet, String nomProjet, String description, String dateDebut, String dateFin, float budget) {
+        this.idProjet = idProjet;
+        this.nomProjet = nomProjet;
+        this.description = description;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.budget = budget;
+    }
     public Projet(String nomProjet, String description, String dateDebut, String dateFin, float budget) {
         this.nomProjet = nomProjet;
         this.description = description;
@@ -21,14 +28,6 @@ public class Projet {
         this.budget = budget;
     }
 
-    public Projet(int idProjet, String dateDebut, String nomProjet, String description, String dateFin, float budget) {
-        this.idProjet = idProjet;
-        this.dateDebut = dateDebut;
-        this.nomProjet = nomProjet;
-        this.description = description;
-        this.dateFin = dateFin;
-        this.budget = budget;
-    }
 
     public int getIdProjet() {
         return idProjet;

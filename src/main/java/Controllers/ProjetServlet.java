@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import DAO.ProjetDao;
 import Model.Projet;
 import jakarta.servlet.RequestDispatcher;
@@ -14,30 +13,30 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-
 @WebServlet("/projet")
 public class ProjetServlet extends HttpServlet {
 
-    ProjetDao projetDao;
+    private ProjetDao projetDao;
 
     @Override
     public void init() throws ServletException {
         try {
             projetDao = new ProjetDao();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new ServletException("Erreur lors de l'initialisation de ProjetDao", e);
         }
     }
 
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
     }
 
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("doGet");
         String action = req.getParameter("action");
         if (action == null) {
-            action = "listprojet";  // Action par défaut si null
+            action = "listprojet";
         }
         switch (action) {
             case "newprojet":
@@ -47,7 +46,7 @@ public class ProjetServlet extends HttpServlet {
                 try {
                     showEditForm(req, resp);
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    throw new ServletException("Erreur lors de l'affichage du formulaire de modification", e);
                 }
                 break;
             case "createprojet":
@@ -60,7 +59,7 @@ public class ProjetServlet extends HttpServlet {
                 try {
                     updateProjet(req, resp);
                 } catch (SQLException e) {
-                    throw new RuntimeException(e);
+                    throw new ServletException("Erreur lors de la mise à jour du projet", e);
                 }
                 break;
             case "deleteprojet":
@@ -72,47 +71,39 @@ public class ProjetServlet extends HttpServlet {
         }
     }
 
-
-
     private void updateProjet(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("idProjet"));
         String nomProjet = request.getParameter("nomProjet");
         String description = request.getParameter("description");
         String dateDebut = request.getParameter("dateDebut");
-        String dateFin = request.getParameter("datefin");
+        String dateFin = request.getParameter("dateFin");
         float budget = Float.parseFloat(request.getParameter("budget"));
-
-        System.out.println("Tentative de mise à jour - ID: " + id + ", Nom: " + nomProjet + ", Description: " + description +
-                ", DateDébut: " + dateDebut + ", DateFin: " + dateFin + ", Budget: " + budget);
 
         Projet projet = new Projet(id, nomProjet, description, dateDebut, dateFin, budget);
         projetDao.updateProjet(projet);
-        System.out.println("Projet mis à jour avec ID : " + id);
         response.sendRedirect(request.getContextPath() + "/projet?action=listprojet");
     }
 
-
-
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("idProjet"));
-        Model.Projet existingProjet = projetDao.getProjet(id);
+        String idParam = request.getParameter("idProjet");
+        if (idParam == null || idParam.isEmpty()) {
+            request.setAttribute("errorMessage", "ID de projet manquant");
+            listProjet(request, response);
+            return;
+        }
+
+        int id = Integer.parseInt(idParam);
+        Projet existingProjet = projetDao.getProjet(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("EditProjet.jsp");
         request.setAttribute("projet", existingProjet);
         dispatcher.forward(request, response);
-        System.out.println("Affichage du formulaire de modification");
-
     }
-
-
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("AddProjet.jsp");
         dispatcher.forward(request, response);
     }
-
-
-
 
     public void ajoutProjet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nomProjet = req.getParameter("nomProjet");
@@ -127,22 +118,16 @@ public class ProjetServlet extends HttpServlet {
     }
 
 
-
-    public void listProjet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void listProjet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Projet> projets = projetDao.getAllProjets();
         req.setAttribute("projets", projets);
-        // Message de débogage pour vérifier la taille de la liste
-        System.out.println("Taille de la liste des projets : " + projets.size());
         RequestDispatcher dispatcher = req.getRequestDispatcher("ListProjet.jsp");
         dispatcher.forward(req, resp);
     }
 
-
-    public void supprimerProjet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void supprimerProjet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         projetDao.deleteProjet(id);
         resp.sendRedirect(req.getContextPath() + "/projet?action=listprojet");
-
     }
-
-    }
+}

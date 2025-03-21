@@ -9,29 +9,30 @@ import java.util.List;
 
 public class ProjetDao {
 
-    Connection connection;
+    private Connection connection;
 
     public ProjetDao() throws SQLException {
         connection = DbConfig.getConnection();
-        try {
-            Statement statement = connection.createStatement();
-            String createProjetTable = "CREATE TABLE IF NOT EXISTS projet (" +
-                    "idProjet INT AUTO_INCREMENT PRIMARY KEY," +
-                    "nomProjet VARCHAR(100) NOT NULL, " +
-                    "description VARCHAR(100) NOT NULL, " +
-                    "dateDebut VARCHAR(100) NOT NULL, " +
-                    "dateFin VARCHAR(100) NOT NULL, " +
-                    "budjet FLOAT NOT NULL " +
-                    ")";
+        createProjetTable();
+    }
 
+    private void createProjetTable() {
+        String createProjetTable = "CREATE TABLE IF NOT EXISTS projet (" +
+                "idProjet INT AUTO_INCREMENT PRIMARY KEY," +
+                "nomProjet VARCHAR(100) NOT NULL, " +
+                "description VARCHAR(100) NOT NULL, " +
+                "dateDebut VARCHAR(100) , " +
+                "dateFin VARCHAR(100) , " +
+                "budget FLOAT NOT NULL " +
+                ")";
+
+        try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(createProjetTable);
             System.out.println("Table 'projet' créée avec succès (si elle n'existait pas).");
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
     public void insertProjet(Projet projet) {
         String insertUserQuery = "INSERT INTO projet (nomProjet, description, dateDebut, datefin, budget) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertUserQuery)) {
@@ -45,6 +46,7 @@ public class ProjetDao {
             throw new RuntimeException(e);
         }
     }
+
     public Projet getProjet(int idProjet) {
         Projet projet = null;
         String select = "SELECT * FROM projet WHERE idProjet = ?";
@@ -57,12 +59,12 @@ public class ProjetDao {
                         resultSet.getString("nomProjet"),
                         resultSet.getString("description"),
                         resultSet.getString("dateDebut"),
-                        resultSet.getString("datefin"),
+                        resultSet.getString("dateFin"),
                         resultSet.getFloat("budget")
                 );
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erreur lors de la récupération du projet", e);
         }
         return projet;
     }
@@ -83,14 +85,12 @@ public class ProjetDao {
                 );
                 projets.add(projet);
             }
-            // Message de débogage pour vérifier le nombre de projets
             System.out.println("Nombre de projets récupérés : " + projets.size());
         } catch (SQLException e) {
             throw new RuntimeException("Erreur lors de la récupération des projets", e);
         }
         return projets;
     }
-
 
     public void deleteProjet(int idProjet) {
         String delete = "DELETE FROM projet WHERE idProjet = ?";
@@ -99,13 +99,12 @@ public class ProjetDao {
             preparedStatement.executeUpdate();
             System.out.println("Projet supprimé");
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erreur lors de la suppression du projet", e);
         }
     }
 
-
     public void updateProjet(Projet projet) {
-        String query = "UPDATE projet SET nomProjet = ?, description = ?, dateDebut = ?, datefin = ?, budget = ? WHERE idProjet = ?";
+        String query = "UPDATE projet SET nomProjet = ?, description = ?, dateDebut = ?, dateFin = ?, budget = ? WHERE idProjet = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, projet.getNomProjet());
             stmt.setString(2, projet.getDescription());
@@ -116,8 +115,7 @@ public class ProjetDao {
             int rowsAffected = stmt.executeUpdate();
             System.out.println("Projet mis à jour avec succès ! " + rowsAffected + " ligne(s) affectée(s).");
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la mise à jour du projet : " + e.getMessage());
-            e.printStackTrace(); // Ajout pour voir la stacktrace complète
+            throw new RuntimeException("Erreur lors de la mise à jour du projet", e);
         }
     }
 }
