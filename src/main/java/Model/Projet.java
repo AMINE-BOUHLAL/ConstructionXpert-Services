@@ -1,58 +1,49 @@
 package Model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Projet {
-    private int id_projet;
-    private String nom;
+    private int idProjet;
+    private String nomProjet;
     private String description;
-    private String date_debut;
-    private String date_fint;
+    private  String dateDebut;
+    private  String dateFin;
     private float budget;
-
-
-    public Projet(int id_projet, String nom, String description, String date_debut, String date_fint, float budget) {
-        this.id_projet = id_projet;
-        this.nom = nom;
-        this.description = description;
-        this.date_debut = date_debut;
-        this.date_fint = date_fint;
-        this.budget = budget;
-    }
 
     public Projet() {
     }
 
-    public Projet(String nom, String description, String date_debut, String date_fint, float budget) {
-        this.nom = nom;
+    public Projet(String nomProjet, String description, String dateDebut, String dateFin, float budget) {
+        this.nomProjet = nomProjet;
         this.description = description;
-        this.date_debut = date_debut;
-        this.date_fint = date_fint;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
         this.budget = budget;
     }
 
-    public float getBudget() {
-        return budget;
-    }
-
-    public void setBudget(float budget) {
+    public Projet(int idProjet, String dateDebut, String nomProjet, String description, String dateFin, float budget) {
+        this.idProjet = idProjet;
+        this.dateDebut = dateDebut;
+        this.nomProjet = nomProjet;
+        this.description = description;
+        this.dateFin = dateFin;
         this.budget = budget;
     }
 
-    public String getDate_fint() {
-        return date_fint;
+    public int getIdProjet() {
+        return idProjet;
     }
 
-    public void setDate_fint(String date_fin) {
-        this.date_fint = date_fint;
+    public void setIdProjet(int idProjet) {
+        this.idProjet = idProjet;
     }
 
-    public String getDate_debut() {
-        return date_debut;
+    public String getNomProjet() {
+        return nomProjet;
     }
 
-    public void setDate_debut(String date_debut) {
-        this.date_debut = date_debut;
+    public void setNomProjet(String nomProjet) {
+        this.nomProjet = nomProjet;
     }
 
     public String getDescription() {
@@ -63,31 +54,27 @@ public class Projet {
         this.description = description;
     }
 
-    public int getId_projet() {
-        return id_projet;
+    public String getDateDebut() {
+        return dateDebut;
     }
 
-    public void setId_projet(int id_projet) {
-        this.id_projet = id_projet;
+    public void setDateDebut(String dateDebut) {
+        this.dateDebut = dateDebut;
     }
 
-    public String getNom() {
-        return nom;
+    public String getDateFin() {
+        return dateFin;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setDateFin(String dateFin) {
+        this.dateFin = dateFin;
     }
 
-    @Override
-    public String toString() {
-        return "Projet{" +
-                "budget=" + budget +
-                ", id_projet=" + id_projet +
-                ", nom='" + nom + '\'' +
-                ", description='" + description + '\'' +
-                ", date_debut='" + date_debut + '\'' +
-                ", date_fin='" + date_fint + '\'' +
-                '}';
+    public float getBudget() {
+        return budget;
+    }
+
+    public void setBudget(float budget) {
+        this.budget = budget;
     }
 }

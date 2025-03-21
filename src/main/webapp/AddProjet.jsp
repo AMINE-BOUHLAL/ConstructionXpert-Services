@@ -3,235 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConstructionXpert Services - Ajouter un Projet</title>
+    <title>Ajouter un Projet - ProGest</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary: #10CAB7;
+            --secondary: #7f8c8d;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
         }
 
         body {
-            background-image: url('https://i.imgur.com/placeholder-construction.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            color: #333;
-            position: relative;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(45deg, #f8f9fa, #e8ecef);
         }
 
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.85);
-            z-index: -1;
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-        }
-
-        header {
-            background-color: #10CAB7;
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo h1 {
-            font-size: 24px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 20px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        nav ul li a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .active {
-            background-color: #10CAB7;
-        }
-
-        .form-section {
-            padding: 30px 0;
-        }
-
-        .form-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .form-title {
+        .navbar-brand {
+            font-weight: 700;
             font-size: 28px;
-            color: #7f8c8d;
+            color: var(--primary);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark) !important;
+            padding: 8px 20px !important;
+        }
+
+        .nav-link:hover {
+            color: var(--primary) !important;
         }
 
         .form-container {
-            background-color: white;
+            max-width: 600px;
+            margin: 50px auto;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .form-group {
-            margin-bottom: 20px;
+        .form-container h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 25px;
+            text-align: center;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
+        .form-container label {
             font-weight: 600;
-            color: #7f8c8d;
+            color: var(--dark);
         }
 
-        .form-control {
+        .form-container input,
+        .form-container textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--light);
+            border-radius: 10px;
+            font-size: 1rem;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: #10CAB7;
-        }
-
-        textarea.form-control {
-            min-height: 120px;
+        .form-container textarea {
             resize: vertical;
+            height: 100px;
         }
 
-        .btn-group {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .btn {
-            background-color: #7f8c8d;
+        .form-container .btn-submit {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
+            padding: 12px 30px;
+            font-size: 1rem;
             font-weight: 600;
-            transition: background-color 0.3s;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            cursor: pointer;
         }
 
-        .btn:hover {
-            background-color: #10CAB7;
+        .form-container .btn-submit:hover {
+            background: #0ea896;
         }
 
-        .btn-primary {
-            background-color: #10CAB7;
-        }
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 20px;
+                padding: 20px;
+            }
 
-        .btn-primary:hover {
-            background-color: #0fb3a1;
-        }
-
-        .btn-secondary {
-            background-color: #95a5a6;
-        }
-
-        .btn-secondary:hover {
-            background-color: #7f8c8d;
+            .form-container h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-<header>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
     <div class="container">
-        <div class="header-content">
-            <div class="logo">
-                <h1>ConstructionPRO</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Projets</a></li>
-                    <li><a href="#">Ressources</a></li>
-                </ul>
-            </nav>
+        <a class="navbar-brand" href="#">Pro<span>Gest</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Projets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Taches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Ressourse</a>
+                </li>
+            </ul>
         </div>
     </div>
-</header>
+</nav>
 
-<main>
-    <div class="container">
-        <section class="form-section">
-            <div class="form-header">
-                <h2 class="form-title">Ajouter un Nouveau Projet</h2>
-            </div>
+<!-- Add Project Form -->
+<div class="form-container">
+    <h2>Ajouter un Projet</h2>
+    <form action="<%= request.getContextPath()%>/projet?action=createprojet" method="post">
+        <div class="form-group">
+            <label for="nom">Nom du Projet</label>
+            <input type="text" id="nom" name="nomProjet" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="date-debut">Date de Début</label>
+            <input type="date" id="date-debut" name="dateDebut" required>
+        </div>
+        <div class="form-group">
+            <label for="date-fin">Date de Fin</label>
+            <input type="date" id="date-fin" name="datefin" required>
+        </div>
+        <div class="form-group">
+            <label for="budget">Budget</label>
+            <input type="number" id="budget" name="budget" step="0.01" required>
+        </div>
+        <button type="submit" class="btn-submit">Ajouter le Projet</button>
+    </form>
+</div>
 
-            <div class="form-container">
-                <form action="<%=request.getContextPath()%>/projet/Ajouter" method="post">
-                    <div class="form-group">
-                        <label for="nom">Nom du Projet</label>
-                        <input type="text" id="nom" name="nom" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" name="description" class="form-control" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="date_debut">Date de Début</label>
-                        <input type="text" id="date_debut" name="date_debut" class="form-control" placeholder="JJ/MM/AAAA" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="date_fin">Date de Fin</label>
-                        <input type="text" id="date_fin" name="date_fin" class="form-control" placeholder="JJ/MM/AAAA" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="budget">Budget (€)</label>
-                        <input type="number" id="budget" name="budget" class="form-control" min="0" step="0.01" required>
-                    </div>
-
-                    <div class="btn-group">
-                        <a href="<%=request.getContextPath()%>/projet/Liste" class="btn btn-secondary">Annuler</a>
-                        <button type="submit" class="btn btn-primary">Enregistrer</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </div>
-</main>
+<!-- Bootstrap JS (for navbar functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

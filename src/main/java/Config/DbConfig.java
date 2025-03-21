@@ -11,6 +11,7 @@ public class DbConfig {
         static String username = "root";
         static String pass = "";
 
+
         public static Connection getConnection() throws SQLException {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -19,4 +20,5 @@ public class DbConfig {
                 throw new SQLException("Database driver not found", e);
             }
         }
+
     }
