@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier Projet - ConstructionPRO</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (pour Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #10CAB7;
@@ -14,55 +18,60 @@
             --dark: #2c3e50;
             --light: #ecf0f1;
         }
-
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(45deg, #f8f9fa, #e8ecef);
-            padding: 50px 0;
         }
-
-        .container {
-            max-width: 800px;
-            background: white;
-            padding: 40px;
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--primary);
+        }
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark) !important;
+            padding: 8px 20px !important;
+        }
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-
-        h2 {
-            color: var(--dark);
-            font-weight: 700;
-            margin-bottom: 30px;
+        .form-container h2 {
             font-size: 2rem;
-        }
-
-        label {
-            font-weight: 500;
+            font-weight: 700;
             color: var(--dark);
-            display: block;
-            margin-bottom: 8px;
+            margin-bottom: 25px;
+            text-align: center;
         }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="number"],
-        textarea {
+        .form-container label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        .form-container input,
+        .form-container textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 10px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            border: 1px solid var(--light);
+            border-radius: 10px;
             font-size: 1rem;
-            transition: border 0.3s ease;
         }
-
-        input:focus,
-        textarea:focus {
-            border-color: var(--primary);
-            outline: none;
+        .form-container textarea {
+            resize: vertical;
+            height: 100px;
         }
-
-        .btn {
+        .form-container .btn-submit {
             background: var(--primary);
             color: white;
             border: none;
@@ -72,37 +81,79 @@
             border-radius: 50px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: background 0.3s ease;
+            width: 100%;
             cursor: pointer;
-            margin-top: 10px;
         }
-
-        .btn:hover {
+        .form-container .btn-submit:hover {
             background: #0ea896;
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 20px;
+                padding: 20px;
+            }
+            .form-container h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">Construction<span>PRO</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.jsp">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/projet?action=listprojet">Projets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/tache?action=listtache">Taches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/ressource?action=listressource">Ressources</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Edit Project Form -->
+<div class="form-container">
     <h2>Modifier Projet</h2>
     <form action="projet" method="post">
         <input type="hidden" name="action" value="updateprojet">
         <input type="hidden" name="idProjet" value="${projet.idProjet}">
-        <label for="nomProjet">Nom du projet :</label>
-        <input type="text" id="nomProjet" name="nomProjet" value="${projet.nomProjet}" required><br>
-        <label for="description">Description :</label>
-        <input type="text" id="description" name="description" value="${projet.description}" required><br>
-        <label for="dateDebut">Date de début :</label>
-        <input type="date" id="dateDebut" name="dateDebut" value="${projet.dateDebut}" required><br>
-        <label for="dateFin">Date de fin :</label>
-        <input type="date" id="dateFin" name="dateFin" value="${projet.dateFin}" required><br>
-        <label for="budget">Budget :</label>
-        <input type="number" id="budget" name="budget" value="${projet.budget}" required><br>
-        <button type="submit">Mettre à jour</button>
+        <div>
+            <label for="nomProjet">Nom du projet :</label>
+            <input type="text" id="nomProjet" name="nomProjet" value="${projet.nomProjet}" required>
+        </div>
+        <div>
+            <label for="description">Description :</label>
+            <textarea id="description" name="description" required>${projet.description}</textarea>
+        </div>
+        <div>
+            <label for="dateDebut">Date de début :</label>
+            <input type="date" id="dateDebut" name="dateDebut" value="${projet.dateDebut}" required>
+        </div>
+        <div>
+            <label for="dateFin">Date de fin :</label>
+            <input type="date" id="dateFin" name="dateFin" value="${projet.dateFin}" required>
+        </div>
+        <div>
+            <label for="budget">Budget :</label>
+            <input type="number" id="budget" name="budget" value="${projet.budget}" required>
+        </div>
+        <button type="submit" class="btn-submit">Mettre à jour</button>
     </form>
 </div>
-
-<!-- Bootstrap JS (optional) -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

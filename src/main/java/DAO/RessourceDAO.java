@@ -15,7 +15,7 @@ public class RessourceDAO {
         connection = DbConfig.getConnection();
 }
 public void createRessource(Ressource ressource) {
-        String sql="INSERT INTO ressource (nom, , type, quantite, fournisseur,  ) VALUES (?, ?, ?, ?,)";
+        String sql="INSERT INTO ressource (nom, type, quantite, fournisseur) VALUES (?, ?, ?, ?)";
         try(PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, ressource.getNom());
             ps.setString(2, ressource.getType());

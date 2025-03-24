@@ -63,31 +63,30 @@ public class RessourceServlet extends HttpServlet {
         }
     }
 
-    private void updateRessource(HttpServletRequest request, HttpServletResponse response)
+    private void updateRessource(HttpServletRequest req, HttpServletResponse resp)
             throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("idRessource"));
-        String nom = request.getParameter("nom");
-        String type = request.getParameter("type");
-        int quantite = Integer.parseInt(request.getParameter("quantite"));
-        String fournisseur = request.getParameter("fournisseur");
+        int id = Integer.parseInt(req.getParameter("id_ressource"));
+        String nom = req.getParameter("nom");
+        String type = req.getParameter("type");
+        int quantite = Integer.parseInt(req.getParameter("quantite"));
+        String fournisseur = req.getParameter("fournisseur");
 
         Ressource ressource = new Ressource(id, nom, type, quantite, fournisseur);
         ressourceDao.updateRessource(ressource);
-        System.out.println("Ressource mise à jour");
-        response.sendRedirect(request.getContextPath() + "/ressource?action=listressource");
+        resp.sendRedirect(req.getContextPath() + "/ressource?action=listressource");
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("idRessource"));
+        int id = Integer.parseInt(request.getParameter("id_ressource"));
         Ressource existingRessource = ressourceDao.getRessource(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ressource-list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/EditRessource.jsp");
         request.setAttribute("ressource", existingRessource);
         dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/ressource-list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/Addressource.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -105,7 +104,7 @@ public class RessourceServlet extends HttpServlet {
     private void listRessource(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Ressource> ressources = ressourceDao.getAllRessources();
         req.setAttribute("ressources", ressources);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/ressource-list.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/ListRessource.jsp");
         dispatcher.forward(req, resp);
     }
 

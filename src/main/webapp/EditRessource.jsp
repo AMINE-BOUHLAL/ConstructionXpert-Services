@@ -1,9 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProGest - Gestion de Projets</title>
+    <title>Ajouter un Projet - ProGest</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -29,7 +31,7 @@
         .navbar-brand {
             font-weight: 700;
             font-size: 28px;
-            color: #10CAB7;
+            color: var(--primary);
         }
 
         .nav-link {
@@ -42,99 +44,69 @@
             color: var(--primary) !important;
         }
 
-        .main-content {
-            display: flex;
-            height: calc(100vh - 76px);
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 50px;
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .image-side img {
-            max-width: 80%;
-            max-height: 80%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .content-side {
-            max-width: 500px;
-        }
-
-        .welcome-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #10CAB7;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
-        }
-
-        .main-title {
-            font-size: 3rem;
+        .form-container h2 {
+            font-size: 2rem;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 25px;
+            text-align: center;
         }
 
-        .main-title span {
-            color: var(--primary);
+        .form-container label {
+            font-weight: 600;
+            color: var(--dark);
         }
 
-        .description {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--light);
+            border-radius: 10px;
+            font-size: 1rem;
         }
 
-        .btn-start {
-            background: #10CAB7;
+        .form-container textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .form-container .btn-submit {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 16px 45px;
+            padding: 12px 30px;
             font-size: 1rem;
             font-weight: 600;
             border-radius: 50px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            width: 100%;
+            cursor: pointer;
         }
 
-        .btn-start:hover {
+        .form-container .btn-submit:hover {
             background: #0ea896;
         }
 
-        @media (max-width: 992px) {
-            .main-content {
-                flex-direction: column;
-                height: auto;
-                padding: 50px 20px;
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 20px;
+                padding: 20px;
             }
 
-            .image-side {
-                margin-bottom: 50px;
-            }
-
-            .main-title {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .main-title {
-                font-size: 2rem;
-            }
-
-            .welcome-text {
-                font-size: 0.8rem;
-            }
-
-            .description {
-                font-size: 1rem;
-            }
-
-            .btn-start {
-                padding: 12px 30px;
-                font-size: 0.9rem;
+            .form-container h2 {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -165,23 +137,29 @@
         </div>
     </div>
 </nav>
-
-<!-- Main Content -->
-<div class="main-content">
-    <!-- Image Side -->
-    <div class="image-side">
-        <img src="ICON/PIC1.jpeg" alt="Project Management" />
-    </div>
-
-    <!-- Content Side -->
-    <div class="content-side">
-        <p class="welcome-text">Bienvenue sur ProGest</p>
-        <h1 class="main-title">Gerez vos <span>projets</span> avec efficacite</h1>
-        <p class="description">Une solution simple et intuitive pour organiser, suivre et reussir tous vos projets professionnels. Commencez des maintenant et boostez votre productivite.</p>
-        <a href="${pageContext.request.contextPath}/projet?action=list" class="btn btn-start">
-            Commencer <i class="fas fa-arrow-right"></i>
-        </a>
-    </div>
+<!-- Add Project Form -->
+<div class="form-container">
+    <h2>Modifier une Ressource</h2>
+    <form action="<%= request.getContextPath()%>/ressource?action=updateressource" method="post">
+        <input type="hidden" name="id_ressource" value="${ressource.id_ressource}">
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" value="${ressource.nom}" required>
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <input type="text" id="type" name="type" value="${ressource.type}" required>
+        </div>
+        <div class="form-group">
+            <label for="quantite">Quantité</label>
+            <input type="number" id="quantite" name="quantite" value="${ressource.quantite}" required>
+        </div>
+        <div class="form-group">
+            <label for="fournisseur">Fournisseur</label>
+            <input type="text" id="fournisseur" name="fournisseur" value="${ressource.fournisseur}" required>
+        </div>
+        <button type="submit" class="btn-submit">Modifier Ressource</button>
+    </form>
 </div>
 
 <!-- Bootstrap JS (for navbar functionality) -->

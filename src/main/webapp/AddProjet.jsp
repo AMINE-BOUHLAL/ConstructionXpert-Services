@@ -113,7 +113,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="#">Pro<span>Gest</span></a>
+        <a class="navbar-brand" href="#">Construction<span>PRO</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -123,13 +123,13 @@
                     <a class="nav-link active" href="index.jsp">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/projet">Projets</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/projet?action=listprojet">Projets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Taches</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/tache?action=listtache">Taches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ressourse</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/ressource?action=listressource">Ressources</a>
                 </li>
             </ul>
         </div>

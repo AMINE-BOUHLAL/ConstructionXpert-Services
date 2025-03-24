@@ -145,13 +145,7 @@
             background: #6c757d;
         }
 
-        .details-btn {
-            background: #3498db;
-        }
 
-        .details-btn:hover {
-            background: #2980b9;
-        }
 
         @media (max-width: 768px) {
             .dashboard-title {
@@ -191,10 +185,10 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/projet?action=listprojet">Projets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Taches</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/tache?action=listtache">Taches</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Ressources</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/ressource?action=listressource">Ressources</a>
                 </li>
             </ul>
         </div>
