@@ -185,10 +185,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Accueil</a>
+                    <a class="nav-link active" href="index.jsp">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Projets</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/projet?action=listprojet">Projets</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Taches</a>
@@ -247,7 +247,7 @@
                         <div class="project-actions">
                             <a href="<%=request.getContextPath()%>/projet?action=neweditform&idProjet=<%=projet.getIdProjet()%>" class="action-btn edit-btn">Modifier</a>
                             <a href="<%=request.getContextPath()%>/projet?action=deleteprojet&id=<%=projet.getIdProjet()%>" class="action-btn delete-btn">Supprimer</a>
-                            <button class="action-btn details-btn">Details</button>
+
                         </div>
                     </td>
                 </tr>

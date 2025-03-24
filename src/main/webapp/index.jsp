@@ -29,7 +29,7 @@
         .navbar-brand {
             font-weight: 700;
             font-size: 28px;
-            color: var(--primary);
+            color: #10CAB7;
         }
 
         .nav-link {
@@ -64,7 +64,7 @@
         .welcome-text {
             font-size: 0.9rem;
             font-weight: 600;
-            color: var(--primary);
+            color: #10CAB7;
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 25px;
@@ -88,7 +88,7 @@
         }
 
         .btn-start {
-            background: var(--primary);
+            background: #10CAB7;
             color: white;
             border: none;
             padding: 16px 45px;
@@ -143,20 +143,20 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="#">Pro<span>Gest</span></a>
+        <a class="navbar-brand" href="#">Construction<span>PRO</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Accueil</a>
+                    <a class="nav-link active" href="index.jsp">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Projets</a>
+                    <a class="nav-link" href="<%=request.getContextPath()%>/projet?action=listprojet">Projets</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Taches</a>
+                    <a class="nav-link" href="">Taches</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Ressources</a>
@@ -170,7 +170,7 @@
 <div class="main-content">
     <!-- Image Side -->
     <div class="image-side">
-        <img src="/ICON/PIC1" alt="Project Management" />
+        <img src="ICON/PIC1.jpeg" alt="Project Management" />
     </div>
 
     <!-- Content Side -->
